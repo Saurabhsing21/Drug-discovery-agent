@@ -5,7 +5,7 @@ import { Check, ChevronDown, ChevronRight, List, Loader2, Search } from "lucide-
 
 import { evidenceDashboardUrl } from "@/lib/api";
 import type { Snapshot } from "@/lib/types";
-import { MarkdownReport } from "@/components/MarkdownReport";
+import { MarkdownReport } from "@/features/report/MarkdownReport";
 
 export type ToolStepStatus = "pending" | "active" | "done" | "error";
 

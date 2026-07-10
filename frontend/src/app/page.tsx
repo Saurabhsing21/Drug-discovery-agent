@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { AssistantToolUI, type SourceStep as UISourceStep } from "@/components/AssistantToolUI";
-import { ChatComposer } from "@/components/ChatComposer";
-import { CompareReportPanel } from "@/components/CompareReportPanel";
-import { MarkdownReport } from "@/components/MarkdownReport";
-import { EvidenceDashboardFrame } from "@/components/EvidenceDashboardFrame";
-import { SourcesGrid } from "@/components/SourcesGrid";
-import { PlanApprovalPanel } from "@/components/PlanApprovalPanel";
-import { ReviewDecisionPanel } from "@/components/ReviewDecisionPanel";
+import { ChatComposer } from "@/features/chat/ChatComposer";
+import { CompareReportPanel } from "@/features/compare/CompareReportPanel";
+import { MarkdownReport } from "@/features/report/MarkdownReport";
+import { EvidenceDashboardFrame } from "@/features/evidence/EvidenceDashboardFrame";
+import { SourcesGrid } from "@/features/evidence/SourcesGrid";
+import { PlanApprovalPanel } from "@/features/review/PlanApprovalPanel";
+import { ReviewDecisionPanel } from "@/features/review/ReviewDecisionPanel";
 import { useRunEvents } from "@/hooks/useRunEvents";
 import { cancelRun, createRun, createRunFromText, deleteSavedRun, evidenceDashboardUrl, getSavedRun, listSavedRuns, postFollowup, renameSavedRun, saveRun } from "@/lib/api";
 import type { SavedRunDetail, SavedRunSummary, SourceName } from "@/lib/types";
