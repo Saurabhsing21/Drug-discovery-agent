@@ -1,10 +1,15 @@
-.PHONY: help bootstrap test lint typecheck quality frontend-install frontend-build docker-build docker-up docker-down docker-logs deploy-up deploy-down deploy-logs
+.PHONY: help bootstrap test test-unit test-integration lint typecheck quality api-dev frontend-install frontend-build docker-build docker-up docker-down docker-logs deploy-up deploy-down deploy-logs
 
 help:
 	@echo "Targets:"
 	@echo "  bootstrap        Create venv + install deps"
-	@echo "  test             Run pytest"
+	@echo "  test             Run full pytest suite"
+	@echo "  test-unit        Run unit tests only (tests/unit/)"
+	@echo "  test-integration Run integration tests only"
+	@echo "  lint             Ruff check on src/ api/ cli/"
+	@echo "  typecheck        mypy on src/drugagent"
 	@echo "  quality          Ruff + mypy + coverage gates"
+	@echo "  api-dev          Start FastAPI dev server (api.main:app)"
 	@echo "  frontend-install Install frontend deps"
 	@echo "  frontend-build   Build Next.js frontend"
 	@echo "  docker-build     Build production docker images"
@@ -19,16 +24,25 @@ bootstrap:
 	./scripts/bootstrap_dev.sh
 
 test:
-	./scripts/test_smoke.sh
+	PYTHONPATH=src python3 -m pytest tests/ -q
+
+test-unit:
+	PYTHONPATH=src python3 -m pytest tests/ -q --ignore=tests/test_connector_integrations.py --ignore=tests/test_mcp_endpoints.py --ignore=tests/test_saved_runs_api.py --ignore=tests/test_server_manager.py
+
+test-integration:
+	PYTHONPATH=src python3 -m pytest tests/test_connector_integrations.py tests/test_mcp_endpoints.py tests/test_saved_runs_api.py tests/test_server_manager.py -v
 
 lint:
-	./venv/bin/python -m ruff check agents cli mcps tests
+	python3 -m ruff check src/ api/ cli/ interfaces/
 
 typecheck:
-	./venv/bin/python -m mypy agents cli mcps --ignore-missing-imports
+	python3 -m mypy src/drugagent --ignore-missing-imports
 
 quality:
 	./scripts/ci_quality_gates.sh
+
+api-dev:
+	PYTHONPATH=src uvicorn api.main:app --reload --port 8000
 
 frontend-install:
 	cd frontend && npm ci
