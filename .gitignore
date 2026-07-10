@@ -25,3 +25,6 @@ mcps/connectors/.depmap_cache/
 # Runtime artifacts (generated)
 artifacts/*
 !artifacts/.gitkeep
+
+# Runtime artifacts generated during tests/runs
+src/drugagent/artifacts/
